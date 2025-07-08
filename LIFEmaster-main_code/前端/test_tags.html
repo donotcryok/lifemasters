@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签功能测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .result { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 3px; }
+        .success { color: green; }
+        .error { color: red; }
+        button { margin: 5px; padding: 8px 15px; cursor: pointer; }
+        input { margin: 5px; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h1>LifeMaster 标签功能测试</h1>
+    
+    <div class="test-section">
+        <h3>1. 登录状态检查</h3>
+        <button onclick="checkLoginStatus()">检查登录状态</button>
+        <div id="login-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. 获取用户标签</h3>
+        <button onclick="getUserTags()">获取标签列表</button>
+        <div id="tags-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. 创建新标签</h3>
+        <input type="text" id="new-tag-name" placeholder="输入标签名称" value="测试标签">
+        <button onclick="createTag()">创建标签</button>
+        <div id="create-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. 获取手账列表</h3>
+        <button onclick="getHandbooks()">获取手账列表</button>
+        <div id="handbooks-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>5. 创建带标签的手账</h3>
+        <input type="text" id="handbook-title" placeholder="手账标题" value="测试手账">
+        <input type="text" id="handbook-tag" placeholder="标签名" value="测试标签">
+        <button onclick="createHandbook()">创建手账</button>
+        <div id="handbook-create-result" class="result"></div>
+    </div>
+
+    <script>
+        const baseUrl = 'http://localhost:5000';
+        
+        function getToken() {
+            return localStorage.getItem('token') || '';
+        }
+        
+        function setResult(elementId, message, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = message;
+            element.className = `result ${isSuccess ? 'success' : 'error'}`;
+        }
+        
+        async function checkLoginStatus() {
+            const token = getToken();
+            if (!token) {
+                setResult('login-result', '未找到登录令牌。请先在主页面登录。', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/user/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    setResult('login-result', `✓ 已登录，用户: ${result.data?.email || '未知'}`, true);
+                } else {
+                    setResult('login-result', `✗ 登录状态检查失败: ${response.status}`, false);
+                }
+            } catch (error) {
+                setResult('login-result', `✗ 请求错误: ${error.message}`, false);
+            }
+        }
+        
+        async function getUserTags() {
+            const token = getToken();
+            if (!token) {
+                setResult('tags-result', '请先登录', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/user/tags`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0) {
+                        setResult('tags-result', `✓ 获取成功，共 ${result.data.length} 个标签: ${JSON.stringify(result.data, null, 2)}`, true);
+                    } else {
+                        setResult('tags-result', `✗ API错误: ${result.msg}`, false);
+                    }
+                } else {
+                    setResult('tags-result', `✗ 请求失败: ${response.status}`, false);
+                }
+            } catch (error) {
+                setResult('tags-result', `✗ 请求错误: ${error.message}`, false);
+            }
+        }
+        
+        async function createTag() {
+            const token = getToken();
+            const tagName = document.getElementById('new-tag-name').value.trim();
+            
+            if (!token) {
+                setResult('create-result', '请先登录', false);
+                return;
+            }
+            
+            if (!tagName) {
+                setResult('create-result', '请输入标签名称', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/user/tags`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        tag_name: tagName,
+                        color: '#007bff'
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0) {
+                        setResult('create-result', `✓ 标签创建成功: ${JSON.stringify(result.data, null, 2)}`, true);
+                    } else {
+                        setResult('create-result', `✗ 创建失败: ${result.msg}`, false);
+                    }
+                } else {
+                    const errorText = await response.text();
+                    setResult('create-result', `✗ 请求失败: ${response.status} - ${errorText}`, false);
+                }
+            } catch (error) {
+                setResult('create-result', `✗ 请求错误: ${error.message}`, false);
+            }
+        }
+        
+        async function getHandbooks() {
+            const token = getToken();
+            if (!token) {
+                setResult('handbooks-result', '请先登录', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/handbooks`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0) {
+                        setResult('handbooks-result', `✓ 获取成功，共 ${result.data.handbooks.length} 个手账: ${JSON.stringify(result.data.handbooks, null, 2)}`, true);
+                    } else {
+                        setResult('handbooks-result', `✗ API错误: ${result.msg}`, false);
+                    }
+                } else {
+                    setResult('handbooks-result', `✗ 请求失败: ${response.status}`, false);
+                }
+            } catch (error) {
+                setResult('handbooks-result', `✗ 请求错误: ${error.message}`, false);
+            }
+        }
+        
+        async function createHandbook() {
+            const token = getToken();
+            const title = document.getElementById('handbook-title').value.trim();
+            const tag = document.getElementById('handbook-tag').value.trim();
+            
+            if (!token) {
+                setResult('handbook-create-result', '请先登录', false);
+                return;
+            }
+            
+            if (!title) {
+                setResult('handbook-create-result', '请输入手账标题', false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/handbooks`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        content: '测试内容',
+                        tags: tag ? [tag] : []
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.code === 0) {
+                        setResult('handbook-create-result', `✓ 手账创建成功: ${JSON.stringify(result.data, null, 2)}`, true);
+                    } else {
+                        setResult('handbook-create-result', `✗ 创建失败: ${result.msg}`, false);
+                    }
+                } else {
+                    const errorText = await response.text();
+                    setResult('handbook-create-result', `✗ 请求失败: ${response.status} - ${errorText}`, false);
+                }
+            } catch (error) {
+                setResult('handbook-create-result', `✗ 请求错误: ${error.message}`, false);
+            }
+        }
+        
+        // 页面加载时自动检查登录状态
+        window.onload = function() {
+            checkLoginStatus();
+        };
+    </script>
+</body>
+</html>
