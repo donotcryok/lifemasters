@@ -1,0 +1,71 @@
+\contentsline {section}{\numberline {1}项目概述}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}产品背景}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}产品目标}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}需求分析阶段}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}用户分析}{3}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}目标用户群体}{3}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}用户痛点}{3}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}功能需求}{4}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}核心功能}{4}{subsubsection.2.2.1}%
+\contentsline {paragraph}{手账功能}{4}{section*.2}%
+\contentsline {paragraph}{任务管理功能}{4}{section*.3}%
+\contentsline {paragraph}{财务管理功能}{5}{section*.4}%
+\contentsline {subsubsection}{\numberline {2.2.2}扩展功能}{5}{subsubsection.2.2.2}%
+\contentsline {paragraph}{小组共享功能}{5}{section*.5}%
+\contentsline {paragraph}{番茄钟功能}{5}{section*.6}%
+\contentsline {paragraph}{社区分享功能}{5}{section*.7}%
+\contentsline {subsection}{\numberline {2.3}非功能需求}{6}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}性能需求}{6}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}安全性需求}{6}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}兼容性需求}{6}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}易用性需求}{6}{subsubsection.2.3.4}%
+\contentsline {section}{\numberline {3}设计阶段}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}系统设计文档}{6}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}架构图}{6}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}技术选型}{7}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}详细设计文档}{7}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}类图（UML）}{7}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}顺序图（UML）}{9}{subsubsection.3.2.2}%
+\contentsline {paragraph}{用户登录流程}{12}{section*.8}%
+\contentsline {paragraph}{财务管理流程}{12}{section*.9}%
+\contentsline {paragraph}{手账创建流程}{13}{section*.10}%
+\contentsline {paragraph}{任务状态更新}{13}{section*.11}%
+\contentsline {subsubsection}{\numberline {3.2.3}用例图（UML）}{14}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}活动图（UML）}{15}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}状态图（UML）}{16}{subsubsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.3}数据库设计}{16}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}接口设计（API文档）}{16}{subsection.3.4}%
+\contentsline {section}{\numberline {4}开发阶段}{16}{section.4}%
+\contentsline {subsection}{\numberline {4.1}人员分工}{16}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}开发者指南}{16}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}环境配置}{16}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}构建步骤}{16}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}前端实现}{17}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}后端实现}{17}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}数据库实现}{17}{subsubsection.4.2.5}%
+\contentsline {paragraph}{环境准备}{17}{section*.12}%
+\contentsline {paragraph}{MySQL数据库设置}{17}{section*.13}%
+\contentsline {paragraph}{Flask数据库初始化}{18}{section*.14}%
+\contentsline {paragraph}{启动应用}{18}{section*.15}%
+\contentsline {section}{\numberline {5}测试阶段}{19}{section.5}%
+\contentsline {subsection}{\numberline {5.1}测试计划（敏捷迭代测试）}{19}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}测试范围}{19}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}测试策略}{19}{subsubsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.2}测试文档报告}{19}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}测试验证}{19}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}登录测试}{19}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}API测试}{19}{subsubsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.3}用户数据隔离测试}{20}{subsubsection.5.3.3}%
+\contentsline {section}{\numberline {6}部署与维护阶段}{20}{section.6}%
+\contentsline {subsection}{\numberline {6.1}部署流程}{20}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}维护策略}{20}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}常见问题解决}{20}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}问题1：数据库连接失败}{20}{subsubsection.6.3.1}%
+\contentsline {subsubsection}{\numberline {6.3.2}问题2：模块导入失败}{21}{subsubsection.6.3.2}%
+\contentsline {subsubsection}{\numberline {6.3.3}问题3：数据库重置}{21}{subsubsection.6.3.3}%
+\contentsline {section}{\numberline {7}项目总结}{21}{section.7}%
+\contentsline {subsection}{\numberline {7.1}项目成果}{21}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}技术收获}{21}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}项目改进建议}{21}{subsection.7.3}%
+\contentsline {section}{\numberline {8}附录参考资料}{22}{section.8}%
+\contentsline {section}{\numberline {9}附录代码清单}{22}{section.9}%

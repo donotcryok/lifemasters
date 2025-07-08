@@ -1,0 +1,466 @@
+\documentclass[a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{indentfirst}        % 首段缩进
+\setlength{\parindent}{2em}     % 缩进2字符
+\usepackage{array}
+\usepackage{colortbl}
+
+\newcommand{\college}{中山大学计算机学院}
+\newcommand{\projname}{软件工程课程项目}
+\newcommand{\reporttitle}{LifeMaster配置与运维文档}
+\newcommand{\authorname}{刘昊、彭怡萱、马福泉、林炜东、刘贤彬、刘明宇}
+\newcommand{\major}{软件工程}
+\newcommand{\adviser}{郑贵锋}
+\newcommand{\startdate}{2025年3月1日}
+\newcommand{\labenddate}{2025年7月6日}
+\newcommand{\labroom}{计算机学院}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\kaishu \projname}
+\fancyhead[C]{\kaishu \reporttitle}
+\fancyhead[R]{\kaishu 项目团队}
+\fancyfoot[C]{第 \thepage 页，共 \pageref{LastPage} 页}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+% 封面
+\begin{titlepage}
+    \centering
+    
+    \includegraphics[width=12cm]{img/SYSULogo.png}
+
+    \vspace{1em}
+    {\Large \college \par}
+    \vspace{1em}
+    {\Large \kaishu \projname \par}
+    \vspace{3em}
+
+    {\fontsize{40pt}{42pt}\kaishu \selectfont \boldmath \reporttitle\par}
+    \vspace*{\fill}
+
+    \begin{center}
+    {\Large
+    \makebox[5em][s]{项目名称}:\underline{\makebox[15em][c]{\kaishu LifeMaster}}\\[1em]
+    \makebox[5em][s]{组员姓名}:\underline{\makebox[15em][c]{\kaishu 刘昊、彭怡萱、马福泉}}\\[0.5em]
+    \makebox[5em][s]{}:\underline{\makebox[15em][c]{\kaishu 林炜东、刘贤彬、刘明宇}}\\[1em]
+    \makebox[5em][s]{专业}:\underline{\makebox[15em][c]{\kaishu \major}}\\[1em]
+    \makebox[5em][s]{课程教师}:\underline{\makebox[15em][c]{\kaishu \adviser}}\\[1em]
+    \makebox[5em][s]{起始日期}:\underline{\makebox[15em][c]{\kaishu \startdate}}\\[1em]
+    \makebox[5em][s]{结束日期}:\underline{\makebox[15em][c]{\kaishu \labenddate}}\\[1em]
+    \makebox[5em][s]{学院}:\underline{\makebox[15em][c]{\kaishu \labroom}}
+    }
+    \end{center}
+
+    \vspace*{\fill}
+\end{titlepage}
+
+% 目录
+\tableofcontents
+\newpage
+
+\section{概述}
+
+LifeMaster是一个集成待办事项管理、记账管理和手账管理功能的个人生活管理系统。本文档详细描述了LifeMaster系统的配置管理、部署架构、运维流程以及常见问题的解决方案，为系统的稳定运行和持续维护提供指导。
+
+\section{系统部署架构概述}
+
+LifeMaster采用经典的Web应用三层结构：
+
+\begin{itemize}
+    \item \textbf{前端层}：使用HTML + CSS（Tailwind）+ JavaScript构建用户界面
+    \item \textbf{后端层}：使用Flask + Python 3.8+提供API服务
+    \item \textbf{数据库层}：使用MySQL 5.7+进行数据存储
+    \item \textbf{部署平台}：使用阿里云服务器实现云端部署
+\end{itemize}
+
+系统通过浏览器访问，支持多平台兼容，用户可通过互联网随时随地使用LifeMaster管理个人生活。
+
+\subsection{架构优势}
+
+\begin{itemize}
+    \item \textbf{技术栈成熟稳定}：采用业界主流技术，社区支持活跃
+    \item \textbf{开发效率高}：前后端分离，支持并行开发
+    \item \textbf{扩展性好}：三层架构便于后续功能扩展和性能优化
+    \item \textbf{运维成本低}：基于云服务器，便于管理和维护
+\end{itemize}
+
+\section{配置管理与版本控制}
+
+\subsection{源码托管}
+
+\begin{table}[H]
+\centering
+\caption{源码托管配置详情}
+\begin{tabular}{|p{3cm}|p{4cm}|p{8cm}|}
+\hline
+\textbf{内容} & \textbf{工具/方式} & \textbf{说明} \\
+\hline
+源码托管 & Git + GitHub & GitHub地址：https://github.com/cornhub919/LIFEmaster 开发过程中所有文件、文档、脚本均纳入版本控制，采用feature-branch分支模型确保主分支稳定，支持多成员并行开发，所有功能需通过Pull Request操作提交，利于代码审查和协作开发。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{配置文件管理}
+
+\begin{table}[H]
+\centering
+\caption{配置文件管理详情}
+\begin{tabular}{|p{3cm}|p{4cm}|p{8cm}|}
+\hline
+\textbf{内容} & \textbf{工具/方式} & \textbf{说明} \\
+\hline
+配置文件 & .env, config.py, requirements.txt & 通过.env文件集中存放敏感配置信息（如数据库连接、JWT密钥），requirements.txt管理依赖包，config.py中实现对不同运行模式（开发、测试、生产）的配置切换，便于迁移部署，提升系统可移植性与安全性。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{虚拟环境}
+
+\begin{table}[H]
+\centering
+\caption{虚拟环境配置详情}
+\begin{tabular}{|p{3cm}|p{4cm}|p{8cm}|}
+\hline
+\textbf{内容} & \textbf{工具/方式} & \textbf{说明} \\
+\hline
+虚拟环境 & venv/conda & 后端环境统一为Python 3.8+，使用包管理工具管理虚拟环境，实现不同环境之间的隔离。推荐使用venv或conda管理Python依赖环境，确保不同机器部署环境一致，降低运行异常风险。所有依赖通过pip freeze固定版本，保障项目的可复现性。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{版本控制策略}
+
+\subsubsection{分支管理}
+
+\begin{itemize}
+    \item \textbf{main分支}：主分支，保存稳定可发布的代码
+    \item \textbf{develop分支}：开发分支，集成最新的开发特性
+    \item \textbf{feature分支}：功能分支，开发具体功能模块
+    \item \textbf{hotfix分支}：热修复分支，紧急修复生产环境问题
+\end{itemize}
+
+\subsubsection{提交规范}
+
+\begin{itemize}
+    \item 提交信息使用规范格式：\texttt{type(scope): description}
+    \item 常用类型：feat（新功能）、fix（修复）、docs（文档）、refactor（重构）
+    \item 每次提交包含完整的功能点，避免部分提交
+    \item 重要变更需要详细的提交说明
+\end{itemize}
+
+\section{持续集成与测试流程}
+
+构建测试流程具备自动化潜力，遵循以下标准流程：
+
+\subsection{开发流程}
+
+\begin{enumerate}
+    \item 开发成员在本地完成模块开发
+    \item 提交代码至GitHub分支
+    \item 发起Pull Request请求
+    \item 代码审查和讨论
+    \item 测试相关负责人进行功能验证
+\end{enumerate}
+
+\subsection{测试策略}
+
+\begin{itemize}
+    \item \textbf{单元测试}：测试个别组件和函数的功能
+    \item \textbf{集成测试}：验证模块间的接口和数据流
+    \item \textbf{冒烟测试}：验证核心流程是否通畅
+    \item \textbf{关键场景测试}：添加任务、创建手账、多用户并发测试等
+\end{itemize}
+
+\subsection{部署流程}
+
+\begin{enumerate}
+    \item 手动集成部署至阿里云端服务器
+    \item 在测试环境进行完整功能验证
+    \item 测试通过后发布到生产环境
+    \item 记录部署日志和回滚方案
+\end{enumerate}
+
+\subsection{自动化扩展}
+
+后续可实现扩展，使用GitHub Actions实现：
+
+\begin{itemize}
+    \item 自动化代码质量检查
+    \item 自动化测试执行
+    \item 自动化部署流程
+    \item 自动化通知机制
+\end{itemize}
+
+\section{部署计划与方式}
+
+\subsection{Web服务器配置}
+
+\begin{table}[H]
+\centering
+\caption{Web服务器部署详情}
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{内容} & \textbf{说明} \\
+\hline
+Web服务器 & 使用Nginx作为反向代理服务器，监听特定端口。后端采用Gunicorn作为WSGI服务运行Flask应用，实现高并发请求处理。Nginx负责将静态资源请求直接处理，将API请求反向代理至Gunicorn，保证了响应效率与安全隔离。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{静态资源管理}
+
+\begin{table}[H]
+\centering
+\caption{静态资源配置详情}
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{内容} & \textbf{说明} \\
+\hline
+静态资源 & 所有前端HTML、CSS、JS文件存放于Nginx指定目录，使用gzip压缩加速加载，支持浏览器缓存配置，减少服务器带宽压力。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{数据库配置}
+
+\begin{table}[H]
+\centering
+\caption{数据库配置详情}
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{内容} & \textbf{说明} \\
+\hline
+数据库 & 远程部署MySQL，开放特定端口，配置防火墙规则确保安全访问 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{部署频率与策略}
+
+\begin{table}[H]
+\centering
+\caption{部署策略详情}
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{内容} & \textbf{说明} \\
+\hline
+部署频率 & 按开发阶段迭代部署，每完成一次核心功能（如番茄钟、财务分析、社交分享）开发后即进行部署测试，确保部署进度与开发进度同步。采用"拉代码→虚拟环境创建→数据库迁移→服务启动"的标准化流程，降低部署出错率。 \\
+\hline
+部署方式 & 手动部署（上传代码、虚拟环境安装依赖、重启服务）后续可考虑把部署流程标准化后封装为Shell脚本，一键完成部署，并记录每次上线时间点与变更日志。 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{标准化部署流程}
+
+\subsubsection{部署前检查}
+
+\begin{enumerate}
+    \item 确认代码已通过所有测试
+    \item 备份当前生产环境数据
+    \item 检查服务器资源状况
+    \item 准备回滚方案
+\end{enumerate}
+
+\subsubsection{部署步骤}
+
+\begin{enumerate}
+    \item 从GitHub拉取最新代码
+    \item 激活虚拟环境并安装依赖
+    \item 执行数据库迁移脚本
+    \item 更新配置文件
+    \item 重启Web服务和后端服务
+    \item 验证部署结果
+\end{enumerate}
+
+\subsubsection{部署后验证}
+
+\begin{enumerate}
+    \item 检查服务状态和日志
+    \item 执行冒烟测试
+    \item 监控系统性能指标
+    \item 记录部署日志
+\end{enumerate}
+
+\section{运行常见问题与解决方案}
+
+\subsection{常见问题汇总}
+
+\begin{table}[H]
+\centering
+\caption{常见问题与解决方案}
+\begin{tabular}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{问题类型} & \textbf{原因与处理方式} \\
+\hline
+数据库连接失败 & 检查MySQL服务状态和.env文件配置，确认数据库服务器地址、端口、用户名、密码等配置项是否正确 \\
+\hline
+模块导入失败 & 使用\texttt{pip install -r requirements.txt}安装依赖，确认虚拟环境已正确激活 \\
+\hline
+数据库重置需求 & 执行\texttt{drop\_all() + create\_all()}处理脚本，注意备份重要数据 \\
+\hline
+API接口请求失败 & 检查后端是否监听对应端口、Token是否过期、防火墙设置等 \\
+\hline
+静态资源加载失败 & 检查Nginx配置、文件路径、权限设置等 \\
+\hline
+性能问题 & 监控数据库查询效率、检查代码逻辑、考虑增加缓存机制 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{故障排查步骤}
+
+\subsubsection{服务无法启动}
+
+\begin{enumerate}
+    \item 检查错误日志文件
+    \item 验证配置文件格式
+    \item 确认端口占用情况
+    \item 检查依赖包版本兼容性
+    \item 验证数据库连接状态
+\end{enumerate}
+
+\subsubsection{性能问题诊断}
+
+\begin{enumerate}
+    \item 监控服务器资源使用情况
+    \item 分析数据库查询性能
+    \item 检查网络延迟
+    \item 评估并发用户数量
+    \item 识别性能瓶颈点
+\end{enumerate}
+
+\subsubsection{数据丢失问题}
+
+\begin{enumerate}
+    \item 立即停止相关操作
+    \item 检查数据库备份
+    \item 分析日志文件
+    \item 评估数据恢复可能性
+    \item 制定数据恢复计划
+\end{enumerate}
+
+\section{后续运维计划}
+
+\subsection{运维项目规划}
+
+\begin{table}[H]
+\centering
+\caption{后续运维计划详情}
+\begin{tabular}{|p{3cm}|p{12cm}|}
+\hline
+\textbf{项目} & \textbf{说明} \\
+\hline
+日志管理 & Flask开发环境默认记录日志；后期可引入logging模块按模块记录错误和访问日志，实现日志分级、轮转和归档 \\
+\hline
+错误监控 & 由于项目无自动化告警设计，须通过日志观察或人工测试发现异常，计划引入监控工具实现实时告警 \\
+\hline
+数据备份 & 后期可尝试使用MySQL定期导出策略，手动备份MySQL数据库，未来可启用定时脚本实现自动备份 \\
+\hline
+安全维护 & 禁止公网暴露数据库端口，密码加密存储，启用HTTPS传输，定期更新安全补丁 \\
+\hline
+兼容性 & Web端兼容Chrome、Firefox、Safari、Edge等主流浏览器，CSS与JS已适配多平台，无需后续维护，系统兼容性经过测试，已经兼容Windows、Linux主流平台 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{监控与告警}
+
+\subsubsection{系统监控指标}
+
+\begin{itemize}
+    \item \textbf{性能指标}：CPU使用率、内存使用率、磁盘I/O、网络流量
+    \item \textbf{应用指标}：响应时间、错误率、并发用户数、API调用频率
+    \item \textbf{数据库指标}：连接数、查询时间、锁等待、慢查询
+    \item \textbf{业务指标}：用户活跃度、功能使用率、数据增长量
+\end{itemize}
+
+\subsubsection{告警策略}
+
+\begin{itemize}
+    \item \textbf{紧急告警}：服务宕机、数据库连接失败、严重错误
+    \item \textbf{警告告警}：资源使用率过高、响应时间超阈值
+    \item \textbf{信息告警}：用户行为异常、潜在安全风险
+\end{itemize}
+
+\subsection{数据管理}
+
+\subsubsection{备份策略}
+
+\begin{itemize}
+    \item \textbf{全量备份}：每周进行一次完整数据库备份
+    \item \textbf{增量备份}：每日进行增量数据备份
+    \item \textbf{实时备份}：重要操作实时同步到备份系统
+    \item \textbf{异地备份}：定期将备份数据同步到异地存储
+\end{itemize}
+
+\subsubsection{数据恢复}
+
+\begin{itemize}
+    \item 制定数据恢复标准操作程序
+    \item 定期测试备份数据完整性
+    \item 建立恢复时间目标（RTO）和恢复点目标（RPO）
+    \item 培训运维人员数据恢复技能
+\end{itemize}
+
+\subsection{安全维护}
+
+\subsubsection{安全检查清单}
+
+\begin{itemize}
+    \item 定期更新系统和依赖包版本
+    \item 检查和修复安全漏洞
+    \item 监控异常登录和操作行为
+    \item 审查和更新访问权限
+    \item 加强密码策略和双因子认证
+\end{itemize}
+
+\subsubsection{安全事件响应}
+
+\begin{itemize}
+    \item 建立安全事件分级响应机制
+    \item 制定应急处理流程
+    \item 建立事件记录和分析制度
+    \item 定期进行安全演练
+\end{itemize}
+
+\subsection{性能优化}
+
+\subsubsection{优化方向}
+
+\begin{itemize}
+    \item \textbf{前端优化}：代码压缩、图片优化、缓存策略
+    \item \textbf{后端优化}：算法优化、数据库查询优化、缓存机制
+    \item \textbf{数据库优化}：索引优化、查询优化、分库分表
+    \item \textbf{架构优化}：负载均衡、微服务拆分、CDN加速
+\end{itemize}
+
+\subsubsection{性能评估}
+
+\begin{itemize}
+    \item 定期进行性能压测
+    \item 监控关键性能指标
+    \item 分析用户反馈和体验数据
+    \item 制定性能改进计划
+\end{itemize}
+
+\section{总结}
+
+LifeMaster配置与运维文档为系统的稳定运行和持续发展提供了全面的指导。通过规范的配置管理、标准化的部署流程、完善的监控体系和及时的故障处理，确保系统能够为用户提供稳定、安全、高效的服务。
+
+随着系统的不断发展和用户需求的变化，运维工作也需要持续改进和优化。团队将根据实际运行情况，不断完善运维流程，提升系统的可靠性和用户体验。
+
+\label{LastPage}
+\end{document}

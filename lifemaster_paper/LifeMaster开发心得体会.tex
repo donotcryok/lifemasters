@@ -1,0 +1,159 @@
+\documentclass[a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{indentfirst}        % 首段缩进
+\setlength{\parindent}{2em}     % 缩进2字符
+\usepackage{zhnumber}           % 中文编号
+\usepackage[dvipsnames]{xcolor}
+\usepackage{array}              % 表格增强
+\usepackage{tabularx}           % 自适应表格
+\usepackage{multirow}           % 多行合并
+
+\newcommand{\college}{中山大学计算机学院}
+\newcommand{\projname}{软件工程课程项目}
+\newcommand{\reporttitle}{LifeMaster开发心得体会}
+\newcommand{\stuno}{项目团队}
+\newcommand{\authorname}{马福泉}
+\newcommand{\major}{软件工程}
+\newcommand{\adviser}{郑贵锋}
+\newcommand{\startdate}{2025年3月1日}
+\newcommand{\labenddate}{2025年7月6日}
+\newcommand{\labroom}{计算机学院}
+
+\pagestyle{fancy} % 使用 fancyhdr 风格
+\fancyhf{}      % 清空默认的页眉页脚
+
+% 设置页眉
+\fancyhead[L]{\kaishu \projname}      % 左侧页眉显示项目名称
+\fancyhead[C]{\kaishu \reporttitle}    % 中间页眉显示报告标题
+\fancyhead[R]{\kaishu 项目团队} % 右侧页眉显示项目团队
+
+% 设置页脚
+\fancyfoot[C]{第 \thepage 页，共 \pageref{LastPage} 页} % 中间页脚显示页码
+
+% 去除页眉页脚与正文之间的分隔线
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+% 封面
+\begin{titlepage}
+    \centering
+    
+    \includegraphics[width=12cm]{img/SYSULogo.png}
+
+    \vspace{1em}
+    {\Large \college \par}
+    \vspace{1em}
+    {\Large \kaishu \projname \par}
+    \vspace{3em}
+
+    {\fontsize{40pt}{42pt}\kaishu \selectfont \boldmath \reporttitle\par}
+    \vspace*{\fill}
+
+    \begin{center}
+    {\Large
+    \makebox[5em][s]{项目名称}:\underline{\makebox[15em][c]{\kaishu LifeMaster}}\\[1em]
+    \makebox[5em][s]{姓名}:\underline{\makebox[15em][c]{\kaishu \authorname}}\\[0.5em]
+    \makebox[5em][s]{课程}:\underline{\makebox[15em][c]{\kaishu \major}}\\[1em]
+    \makebox[5em][s]{课程教师}:\underline{\makebox[15em][c]{\kaishu \adviser}}\\[1em]
+    \makebox[5em][s]{起始日期}:\underline{\makebox[15em][c]{\kaishu \startdate}}\\[1em]
+    \makebox[5em][s]{结束日期}:\underline{\makebox[15em][c]{\kaishu \labenddate}}\\[1em]
+    \makebox[5em][s]{学院}:\underline{\makebox[15em][c]{\kaishu \labroom}}
+    }
+    \end{center}
+
+    \vspace*{\fill}
+\end{titlepage}
+
+% 目录
+\tableofcontents
+\newpage
+
+\section{项目简介与个人职责}
+
+LifeMaster是一款综合性生活管理应用，集成了手账记录、任务管理、财务管理、小组协作等多项功能。项目采用前后端分离的架构，历时17周的开发周期，通过团队协作成功完成了从需求分析到系统实现的完整开发流程。
+
+在参与LifeMaster项目的过程中，我主要负责数据库开发、后期代码调试、前后端接口调试以及界面优化等工作。通过这次项目实践，我深刻体会到了软件工程理论与实际开发相结合的重要性，也进一步理解了数据库在软件系统中的核心地位以及软件开发过程中的各个环节对项目成功的影响。
+
+具体而言，我的主要职责包括：
+
+\begin{itemize}
+    \item \textbf{数据库设计与开发}：负责整个系统的数据库架构设计，包括用户表、手账表、任务表、财务表等核心数据表的设计，确保数据之间的关系清晰合理
+    \item \textbf{后期代码调试}：定位和修复代码中的问题，确保系统的稳定性和可靠性
+    \item \textbf{前后端接口调试}：确保前后端接口定义一致，与前端开发人员协作解决接口调用问题
+    \item \textbf{界面优化}：参与用户界面的优化工作，重新设计界面布局结构，优化用户交互体验，提升整体用户体验
+\end{itemize}
+
+\section{具体工作收获}
+
+\subsection{数据库开发：系统架构的核心}
+
+数据库是软件系统的核心组件，它存储着系统运行所需的所有数据。在LifeMaster项目中，我负责数据库的设计与开发，这让我深刻认识到数据库设计的合理性对系统性能和用户体验的直接影响。
+
+在设计数据库时，我首先进行了详细的需求分析，明确了每个功能模块需要存储的数据类型和数据之间的关系。例如，在手账模块中，用户可以创建手账、添加图片、使用贴纸等，这就需要设计出能够存储手账内容、图片资源、贴纸信息以及它们之间关联的表结构
+
+在数据库设计过程中，我遵循了范式理论，将数据分解为多个独立的表，以减少数据冗余并提高数据一致性。同时，我也注意到了反范式设计在某些场景下的优势，例如在查询频繁的场景中，适当的数据冗余可以提高查询效率。因此，在设计过程中，我根据具体需求进行了权衡，既保证了数据的规范化，又兼顾了查询性能。
+
+\subsection{后期代码调试：质量保障的关键环节}
+
+在软件开发过程中，代码调试是确保软件质量的关键环节。在LifeMaster项目的后期，我负责代码的调试工作，这让我深刻体会到了细节的重要性。
+
+前后端接口调试是项目后期的重点工作之一。由于LifeMaster采用了前后端分离的架构，前后端接口的调试显得尤为重要。在调试过程中，我首先确保了前后端接口的定义一致，这是接口正常通信的基础。然后，我使用Postman等工具模拟前端请求，测试后端接口的返回结果是否符合预期。同时，我也与前端开发人员密切合作，通过查看浏览器的开发者工具中的网络请求和响应，排查接口调用过程中可能出现的问题。
+
+例如，在登录接口的调试过程中，我发现前端发送的请求参数格式与后端接口定义的格式不一致，导致后端无法正确解析请求参数。通过与前端开发人员的沟通和协作，我们修改了前端代码，使请求参数格式与后端接口定义一致，从而解决了接口调用问题。
+
+\subsection{界面优化：提升用户体验的关键}
+
+在软件工程中，用户体验是衡量软件质量的重要标准之一。在LifeMaster项目中，我也参与了界面优化的工作，这让我深刻体会到了界面设计对用户体验的影响。
+
+界面布局是用户体验的第一印象。在LifeMaster的界面优化过程中，我与前端开发人员一起，根据用户的使用习惯和功能模块的特点，重新设计了界面的布局结构。例如，在手账记录页面，我们将富文本编辑器放置在页面的中心位置，方便用户进行手账内容的编辑。
+
+界面交互也是提升用户体验的重要方面。在LifeMaster的界面优化过程中，我们对界面交互进行了优化。例如，在任务管理页面，我们为任务卡片添加了鼠标悬停效果和点击效果，当用户鼠标悬停在任务卡片上时，任务卡片会高亮显示，当用户点击任务卡片时，会弹出任务详情对话框，方便用户查看和编辑任务。
+
+\section{总结}
+
+通过参与LifeMaster项目，我在数据库开发、代码调试、界面优化等方面积累了丰富的实践经验，也进一步加深了对软件工程理论的理解。
+
+\subsection{主要收获}
+
+\begin{itemize}
+    \item \textbf{技术能力提升}：在数据库设计、代码调试、接口开发等方面的技术水平得到显著提高，掌握了多种开发工具和调试技术
+    \item \textbf{理论实践结合}：深刻体会到软件工程理论与实际开发相结合的重要性，学会了将理论知识应用到具体的项目实践中
+    \item \textbf{团队协作经验}：通过与前端开发人员的密切合作，提高了沟通协调能力和团队协作意识
+    \item \textbf{用户体验意识}：通过界面优化工作，建立了以用户为中心的产品思维，关注用户需求和使用体验
+    \item \textbf{质量保障意识}：认识到代码调试和质量控制在软件开发中的重要作用，建立了严谨的开发态度
+\end{itemize}
+
+\subsection{深层感悟}
+
+我深刻认识到，软件开发是一个复杂的过程，需要团队成员之间的密切合作和各个环节的紧密衔接。数据库作为系统的核心，其设计质量直接影响整个系统的性能和稳定性。代码调试不仅是发现和修复问题的过程，更是保证软件质量的重要手段。界面优化则体现了对用户体验的关注，是软件产品成功的关键因素之一。
+
+这次项目经历让我明白，理论知识只有与实践相结合，才能发挥真正的价值。同时，团队合作、沟通协调、持续学习等软技能同样重要，是成为优秀软件工程师不可或缺的素质。
+
+\subsection{未来展望}
+
+在未来的软件开发工作中，我将继续运用软件工程的理论知识，结合实际开发经验，不断提升自己的技术水平和项目管理能力。我将：
+
+\begin{itemize}
+    \item 深入学习新技术和新框架，保持技术敏感度
+    \item 加强团队协作和沟通能力的培养
+    \item 注重用户体验和产品质量的提升
+    \item 建立持续学习的习惯，跟上技术发展的步伐
+    \item 积极参与更多项目实践，积累丰富的开发经验
+\end{itemize}
+
+通过LifeMaster项目的实践，我不仅提升了专业技能，更重要的是培养了软件工程师应具备的职业素养和思维方式。这些宝贵的经验将成为我未来职业发展的重要基础，为开发出更多高质量的软件产品而努力。
+
+\end{document}
